@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect - Parent-Teen Relationship App</title>
-    <link rel="stylesheet" href="style.css?v=1.1">  <!-- Ensures Latest CSS Loads -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
@@ -32,7 +32,7 @@
             <div class="card">
                 <h3>Today's Challenge</h3>
                 <p>Share a photo of something that made you smile today and tell each other why it brightened your day.</p>
-                <button class="btn secondary-btn">Accept Challenge</button>
+                <button class="btn secondary-btn" id="accept-challenge">Accept Challenge</button>
             </div>
         </div>
 
@@ -67,9 +67,35 @@
                 <p>Track progress on goals you've set together.</p>
             </div>
         </div>
+
+        <!-- ✅ Onboarding Modal (Fixed) -->
+        <div class="modal" id="onboarding-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Welcome to Connect!</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <p>Let's set up your profile to get the most out of Connect:</p>
+
+                <div class="input-group">
+                    <label>I am a:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn">Parent</button>
+                        <button class="btn secondary-btn">Teen</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="display-name">Display Name:</label>
+                    <input type="text" id="display-name" placeholder="What should we call you?">
+                </div>
+
+                <button class="btn" style="width: 100%;">Complete Setup</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Link JavaScript -->
-    <script src="script.js"></script>
+    <!-- ✅ Corrected JS Link -->
+    <script src="script.js" defer></script>
 </body>
 </html>
