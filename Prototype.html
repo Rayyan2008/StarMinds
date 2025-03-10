@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect - Parent-Teen Relationship App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .app-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            height: 100vh;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .tab-navigation {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            color: #777;
+        }
+        
+        .tab.active {
+            color: #6e8efb;
+            border-bottom: 3px solid #6e8efb;
+        }
+        
+        .screen {
+            display: none;
+            padding: 20px;
+            height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .card h3 {
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            background: #6e8efb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #5d7df9;
+            transform: translateY(-2px);
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: #6e8efb;
+            border: 1px solid #6e8efb;
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(110, 142, 251, 0.1);
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .activity-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            background: #e2e7ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 22px;
+        }
+        
+        .activity-info {
+            flex: 1;
+        }
+        
+        .activity-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .activity-info p {
+            font-size: 13px;
+            color: #777;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .conversation-item {
+            display: flex;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e2e7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #6e8efb;
+            font-weight: bold;
+        }
+        
+        .conversation-info {
+            flex: 1;
+        }
+        
+        .conversation-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .conversation-info p {
+            font-size: 13px;
+            color: #777;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .badge {
+            background: #6e8efb;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .goal-progress {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #6e8efb;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>Connect</h1>
+            <p>Strengthening parent-teen relationships</p>
+        </div>
+        
+        <div class="tab-navigation">
+            <div class="tab active" data-screen="home">Home</div>
+            <div class="tab" data-screen="activities">Activities</div>
+            <div class="tab" data-screen="chat">Chat</div>
+            <div class="tab" data-screen="goals">Goals</div>
+        </div>
+        
+        <!-- Home Screen -->
+        <div class="screen active" id="home">
+            <div class="card">
+                <h3>Welcome to Connect!</h3>
+                <p>Your space to build stronger relationships with your family through meaningful activities and conversations.</p>
+                <button class="btn" id="show-onboarding">Get Started</button>
+            </div>
+            
+            <div class="card">
+                <h3>Today's Challenge</h3>
+                <p>Share a photo of something that made you smile today and tell each other why it brightened your day.</p>
+                <button class="btn secondary-btn">Accept Challenge</button>
+            </div>
+            
+            <div class="card">
+                <h3>Recent Activity</h3>
+                <div class="activity-item">
+                    <div class="activity-icon">🎯</div>
+                    <div class="activity-info">
+                        <h4>Weekly Goal Progress</h4>
+                        <p>You've completed 2 of 3 family activities this week!</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">💬</div>
+                    <div class="activity-info">
+                        <h4>Mom started a new conversation</h4>
+                        <p>Topic: "Weekend plans"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activities Screen -->
+        <div class="screen" id="activities">
+            <div class="card">
+                <h3>Suggested Activities</h3>
+                <p>Try these activities with your family to build stronger connections.</p>
+            </div>
+            
+            <div class="activity-item" id="show-activity-detail">
+                <div class="activity-icon">🧩</div>
+                <div class="activity-info">
+                    <h4>Interest Discovery</h4>
+                    <p>Find hidden common interests with your parents</p>
+                </div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon">📸</div>
+                <div class="activity-info">
+                    <h4>Photo Challenge</h4>
+                    <p>A fun photo scavenger hunt for the whole family</p>
+                </div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon">🎮</div>
+                <div class="activity-info">
+                    <h4>Game Night</h4>
+                    <p>Suggested games and discussion topics</p>
+                </div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon">🎵</div>
+                <div class="activity-info">
+                    <h4>Music Exchange</h4>
+                    <p>Share and discover music across generations</p>
+                </div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon">🍳</div>
+                <div class="activity-info">
+                    <h4>Cook Together</h4>
+                    <p>Simple recipes that are fun to make as a family</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Screen -->
+        <div class="screen" id="chat">
+            <div class="card">
+                <h3>Conversations</h3>
+                <p>Private chats with your family members.</p>
+            </div>
+            
+            <div class="conversation-item">
+                <div class="conversation-avatar">M</div>
+                <div class="conversation-info">
+                    <h4>Mom <span class="badge">New</span></h4>
+                    <p>Hey, what time will you be home tonight?</p>
+                </div>
+            </div>
+            
+            <div class="conversation-item">
+                <div class="conversation-avatar">D</div>
+                <div class="conversation-info">
+                    <h4>Dad</h4>
+                    <p>I found this article about the college you were interested in...</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Conversation Starters</h3>
+                <p>Not sure what to talk about? Try one of these topics:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>What's the most interesting thing you learned this week?</li>
+                    <li>If you could travel anywhere, where would you go?</li>
+                    <li>What's one thing you want to accomplish this year?</li>
+                </ul>
+                <button class="btn secondary-btn">More Topics</button>
+            </div>
+        </div>
+        
+        <!-- Goals Screen -->
+        <div class="screen" id="goals">
+            <div class="card">
+                <h3>Family Goals</h3>
+                <p>Track progress on goals you've set together.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Weekly Family Time</h3>
+                <p>Spend at least 3 hours of quality time together each week</p>
+                <div class="goal-progress">
+                    <div class="progress-bar" style="width: 65%;"></div>
+                </div>
+                <p style="text-align: right; margin-top: 5px;">2 hours / 3 hours</p>
+            </div>
+            
+            <div class="card">
+                <h3>Try New Activities</h3>
+                <p>Try 2 new activities together this month</p>
+                <div class="goal-progress">
+                    <div class="progress-bar" style="width: 50%;"></div>
+                </div>
+                <p style="text-align: right; margin-top: 5px;">1 / 2 activities</p>
+            </div>
+            
+            <div class="card">
+                <h3>Create a New Goal</h3>
+                <button class="btn" id="show-new-goal">+ Add Family Goal</button>
+            </div>
+        </div>
+        
+        <!-- Activity Detail Modal -->
+        <div class="modal" id="activity-detail-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Interest Discovery</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                
+                <p>This activity helps parents and teens discover shared interests they might not know they have in common.</p>
+                
+                <h4 style="margin: 15px 0 10px 0;">How it works:</h4>
+                <ol style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Both parent and teen separately answer a series of interest-based questions</li>
+                    <li>The app identifies overlapping interests</li>
+                    <li>You'll receive suggestions for activities based on your shared interests</li>
+                </ol>
+                
+                <p style="margin-bottom: 20px;">Time required: 10-15 minutes</p>
+                
+                <button class="btn">Start Activity</button>
+            </div>
+        </div>
+        
+        <!-- New Goal Modal -->
+        <div class="modal" id="new-goal-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create New Goal</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                
+                <div class="input-group">
+                    <label for="goal-title">Goal Title:</label>
+                    <input type="text" id="goal-title" placeholder="e.g., Learn a new skill together">
+                </div>
+                
+                <div class="input-group">
+                    <label for="goal-description">Description:</label>
+                    <textarea id="goal-description" rows="3" placeholder="What do you want to achieve together?"></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label for="goal-timeline">Timeline:</label>
+                    <select id="goal-timeline" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option>Daily</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                        <option>Custom</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="goal-target">Target Amount:</label>
+                    <input type="number" id="goal-target" placeholder="e.g., 5 activities">
+                </div>
+                
+                <button class="btn">Create Goal</button>
+            </div>
+        </div>
+        
+        <!-- Onboarding Modal -->
+        <div class="modal" id="onboarding-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Welcome to Connect!</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                
+                <p>Let's set up your profile to get the most out of Connect:</p>
+                
+                <div class="input-group">
+                    <label>I am a:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" style="flex: 1;">Parent</button>
+                        <button class="btn secondary-btn" style="flex: 1;">Teen</button>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="display-name">Display Name:</label>
+                    <input type="text" id="display-name" placeholder="What should we call you?">
+                </div>
+                
+                <div class="input-group">
+                    <label>Invite Your Family:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" placeholder="Enter email or phone" style="flex: 1;">
+                        <button class="btn">Invite</button>
+                    </div>
+                </div>
+                
+                <button class="btn" style="width: 100%;">Complete Setup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and screens
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding screen
+                const screenId = tab.getAttribute('data-screen');
+                document.getElementById(screenId).classList.add('active');
+            });
+        });
+        
+        // Modal handling
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
+        
+        // Close modals when clicking the X button
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.addEventListener('click', closeAllModals);
+        });
+        
+        // Close modals when clicking outside the content
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', event => {
+                if (event.target === modal) {
+                    closeAllModals();
+                }
+            });
+        });
+        
+        // Show activity detail modal
+        document.getElementById('show-activity-detail').addEventListener('click', () => {
+            openModal('activity-detail-modal');
+        });
+        
+        // Show new goal modal
+        document.getElementById('show-new-goal').addEventListener('click', () => {
+            openModal('new-goal-modal');
+        });
+        
+        // Show onboarding modal
+        document.getElementById('show-onboarding').addEventListener('click', () => {
+            openModal('onboarding-modal');
+        });
+    </script>
+</body>
+</html>
