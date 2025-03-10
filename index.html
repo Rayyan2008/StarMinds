@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect - Parent-Teen Relationship App</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Link CSS (Ensuring Browser Loads the Latest Version) -->
+    <link rel="stylesheet" href="style.css?v=1.1">
 </head>
 <body>
     <div class="app-container">
@@ -12,14 +14,15 @@
             <h1>Connect</h1>
             <p>Strengthening parent-teen relationships</p>
         </div>
-        
+
+        <!-- Navigation Tabs -->
         <div class="tab-navigation">
             <div class="tab active" data-screen="home">Home</div>
             <div class="tab" data-screen="activities">Activities</div>
             <div class="tab" data-screen="chat">Chat</div>
             <div class="tab" data-screen="goals">Goals</div>
         </div>
-        
+
         <!-- Home Screen -->
         <div class="screen active" id="home">
             <div class="card">
@@ -27,39 +30,21 @@
                 <p>Your space to build stronger relationships with your family through meaningful activities and conversations.</p>
                 <button class="btn" id="show-onboarding">Get Started</button>
             </div>
-            
+
             <div class="card">
                 <h3>Today's Challenge</h3>
                 <p>Share a photo of something that made you smile today and tell each other why it brightened your day.</p>
                 <button class="btn secondary-btn">Accept Challenge</button>
             </div>
-            
-            <div class="card">
-                <h3>Recent Activity</h3>
-                <div class="activity-item">
-                    <div class="activity-icon">🎯</div>
-                    <div class="activity-info">
-                        <h4>Weekly Goal Progress</h4>
-                        <p>You've completed 2 of 3 family activities this week!</p>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon">💬</div>
-                    <div class="activity-info">
-                        <h4>Mom started a new conversation</h4>
-                        <p>Topic: "Weekend plans"</p>
-                    </div>
-                </div>
-            </div>
         </div>
-        
+
         <!-- Activities Screen -->
         <div class="screen" id="activities">
             <div class="card">
                 <h3>Suggested Activities</h3>
                 <p>Try these activities with your family to build stronger connections.</p>
             </div>
-            
+
             <div class="activity-item" id="show-activity-detail">
                 <div class="activity-icon">🧩</div>
                 <div class="activity-info">
@@ -67,202 +52,26 @@
                     <p>Find hidden common interests with your parents</p>
                 </div>
             </div>
-            
-            <div class="activity-item">
-                <div class="activity-icon">📸</div>
-                <div class="activity-info">
-                    <h4>Photo Challenge</h4>
-                    <p>A fun photo scavenger hunt for the whole family</p>
-                </div>
-            </div>
-            
-            <div class="activity-item">
-                <div class="activity-icon">🎮</div>
-                <div class="activity-info">
-                    <h4>Game Night</h4>
-                    <p>Suggested games and discussion topics</p>
-                </div>
-            </div>
-            
-            <div class="activity-item">
-                <div class="activity-icon">🎵</div>
-                <div class="activity-info">
-                    <h4>Music Exchange</h4>
-                    <p>Share and discover music across generations</p>
-                </div>
-            </div>
-            
-            <div class="activity-item">
-                <div class="activity-icon">🍳</div>
-                <div class="activity-info">
-                    <h4>Cook Together</h4>
-                    <p>Simple recipes that are fun to make as a family</p>
-                </div>
-            </div>
         </div>
-        
+
         <!-- Chat Screen -->
         <div class="screen" id="chat">
             <div class="card">
                 <h3>Conversations</h3>
                 <p>Private chats with your family members.</p>
             </div>
-            
-            <div class="conversation-item">
-                <div class="conversation-avatar">M</div>
-                <div class="conversation-info">
-                    <h4>Mom <span class="badge">New</span></h4>
-                    <p>Hey, what time will you be home tonight?</p>
-                </div>
-            </div>
-            
-            <div class="conversation-item">
-                <div class="conversation-avatar">D</div>
-                <div class="conversation-info">
-                    <h4>Dad</h4>
-                    <p>I found this article about the college you were interested in...</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>Conversation Starters</h3>
-                <p>Not sure what to talk about? Try one of these topics:</p>
-                <ul style="margin-left: 20px; margin-bottom: 15px;">
-                    <li>What's the most interesting thing you learned this week?</li>
-                    <li>If you could travel anywhere, where would you go?</li>
-                    <li>What's one thing you want to accomplish this year?</li>
-                </ul>
-                <button class="btn secondary-btn">More Topics</button>
-            </div>
         </div>
-        
+
         <!-- Goals Screen -->
         <div class="screen" id="goals">
             <div class="card">
                 <h3>Family Goals</h3>
                 <p>Track progress on goals you've set together.</p>
             </div>
-            
-            <div class="card">
-                <h3>Weekly Family Time</h3>
-                <p>Spend at least 3 hours of quality time together each week</p>
-                <div class="goal-progress">
-                    <div class="progress-bar" style="width: 65%;"></div>
-                </div>
-                <p style="text-align: right; margin-top: 5px;">2 hours / 3 hours</p>
-            </div>
-            
-            <div class="card">
-                <h3>Try New Activities</h3>
-                <p>Try 2 new activities together this month</p>
-                <div class="goal-progress">
-                    <div class="progress-bar" style="width: 50%;"></div>
-                </div>
-                <p style="text-align: right; margin-top: 5px;">1 / 2 activities</p>
-            </div>
-            
-            <div class="card">
-                <h3>Create a New Goal</h3>
-                <button class="btn" id="show-new-goal">+ Add Family Goal</button>
-            </div>
-        </div>
-        
-        <!-- Activity Detail Modal -->
-        <div class="modal" id="activity-detail-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Interest Discovery</h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                
-                <p>This activity helps parents and teens discover shared interests they might not know they have in common.</p>
-                
-                <h4 style="margin: 15px 0 10px 0;">How it works:</h4>
-                <ol style="margin-left: 20px; margin-bottom: 20px;">
-                    <li>Both parent and teen separately answer a series of interest-based questions</li>
-                    <li>The app identifies overlapping interests</li>
-                    <li>You'll receive suggestions for activities based on your shared interests</li>
-                </ol>
-                
-                <p style="margin-bottom: 20px;">Time required: 10-15 minutes</p>
-                
-                <button class="btn">Start Activity</button>
-            </div>
-        </div>
-        
-        <!-- New Goal Modal -->
-        <div class="modal" id="new-goal-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Create New Goal</h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                
-                <div class="input-group">
-                    <label for="goal-title">Goal Title:</label>
-                    <input type="text" id="goal-title" placeholder="e.g., Learn a new skill together">
-                </div>
-                
-                <div class="input-group">
-                    <label for="goal-description">Description:</label>
-                    <textarea id="goal-description" rows="3" placeholder="What do you want to achieve together?"></textarea>
-                </div>
-                
-                <div class="input-group">
-                    <label for="goal-timeline">Timeline:</label>
-                    <select id="goal-timeline" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
-                        <option>Daily</option>
-                        <option>Weekly</option>
-                        <option>Monthly</option>
-                        <option>Custom</option>
-                    </select>
-                </div>
-                
-                <div class="input-group">
-                    <label for="goal-target">Target Amount:</label>
-                    <input type="number" id="goal-target" placeholder="e.g., 5 activities">
-                </div>
-                
-                <button class="btn">Create Goal</button>
-            </div>
-        </div>
-        
-        <!-- Onboarding Modal -->
-        <div class="modal" id="onboarding-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Welcome to Connect!</h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                
-                <p>Let's set up your profile to get the most out of Connect:</p>
-                
-                <div class="input-group">
-                    <label>I am a:</label>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn" style="flex: 1;">Parent</button>
-                        <button class="btn secondary-btn" style="flex: 1;">Teen</button>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label for="display-name">Display Name:</label>
-                    <input type="text" id="display-name" placeholder="What should we call you?">
-                </div>
-                
-                <div class="input-group">
-                    <label>Invite Your Family:</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" placeholder="Enter email or phone" style="flex: 1;">
-                        <button class="btn">Invite</button>
-                    </div>
-                </div>
-                
-                <button class="btn" style="width: 100%;">Complete Setup</button>
-            </div>
         </div>
     </div>
 
+    <!-- Link JavaScript (at the end to ensure elements load first) -->
     <script src="script.js"></script>
 </body>
 </html>
