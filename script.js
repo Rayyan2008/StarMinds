@@ -1,25 +1,29 @@
+// Ensure script is loaded
+console.log("Script loaded!");
+
 // Tab Navigation
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
+        console.log("Tab clicked:", tab.innerText);
+        
         // Remove active class from all tabs and screens
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        
-        // Add active class to clicked tab
+
+        // Activate clicked tab and corresponding screen
         tab.classList.add('active');
-        
-        // Show corresponding screen
-        const screenId = tab.getAttribute('data-screen');
-        document.getElementById(screenId).classList.add('active');
+        document.getElementById(tab.getAttribute('data-screen')).classList.add('active');
     });
 });
 
 // Modal handling
 function openModal(modalId) {
+    console.log("Opening modal:", modalId);
     document.getElementById(modalId).classList.add('active');
 }
 
 function closeAllModals() {
+    console.log("Closing all modals");
     document.querySelectorAll('.modal').forEach(modal => {
         modal.classList.remove('active');
     });
@@ -39,17 +43,15 @@ document.querySelectorAll('.modal').forEach(modal => {
     });
 });
 
-// Show activity detail modal
-document.getElementById('show-activity-detail').addEventListener('click', () => {
+// Check if elements exist before adding event listeners
+document.getElementById('show-activity-detail')?.addEventListener('click', () => {
     openModal('activity-detail-modal');
 });
 
-// Show new goal modal
-document.getElementById('show-new-goal').addEventListener('click', () => {
+document.getElementById('show-new-goal')?.addEventListener('click', () => {
     openModal('new-goal-modal');
 });
 
-// Show onboarding modal
-document.getElementById('show-onboarding').addEventListener('click', () => {
+document.getElementById('show-onboarding')?.addEventListener('click', () => {
     openModal('onboarding-modal');
 });
